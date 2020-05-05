@@ -12,17 +12,33 @@ import { RedyformModel } from 'projects/redyform/src/public-api';
     </div>
     <redyform [model]="model" [(ngModel)]="data"></redyform>
     <pre>{{ data | json }}</pre>
+    <button (click)="changeModel()">drop model</button>
   `,
   styles: []
 })
 export class AppComponent {
   title = 'redyform-example';
 
-  data = {
-    comments: []
-  };
+  data;
 
   model: RedyformModel = [
+    {
+      label: 'Post',
+      type: 'object',
+      name: 'post',
+      children: [
+        {
+          label: 'Title',
+          name: 'title',
+          type: 'string',
+        },
+        {
+          label: 'Content',
+          name: 'content',
+          type: 'textarea',
+        }
+      ]
+    },
     {
       label: 'Comments',
       type: 'array',
@@ -41,4 +57,12 @@ export class AppComponent {
       ]
     }
   ];
+
+  modelBackup = [];
+
+  changeModel() {
+    let m = this.model;
+    this.model = this.modelBackup;
+    this.modelBackup = m;
+  }
 }

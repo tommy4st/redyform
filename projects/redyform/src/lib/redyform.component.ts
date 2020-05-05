@@ -1,20 +1,37 @@
 import { Component, Input, forwardRef, Output, EventEmitter, OnDestroy, ElementRef, OnInit } from '@angular/core';
 import { FormGroup, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { RedyformService, Redyform } from './redyform.service';
+import { RedyformService, Redyform, RedyformModel } from './redyform.service';
 
 @Component({
   selector: 'redyform',
   templateUrl: 'redyform.component.html',
-  styleUrls: [],
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => RedyformComponent), multi: true }
   ]
 })
 export class RedyformComponent implements ControlValueAccessor, OnInit, OnDestroy {
   @Output() valueChanges = new EventEmitter();
-  @Input() model: any = [];
-  @Input() form: FormGroup = new FormGroup({});
+  
+  private _model: RedyformModel = [];
+  @Input()
+  set model(value: RedyformModel) {
+    this._model = value;
+    this.ngOnInit();
+  }
+  get model(): RedyformModel {
+    return this._model;
+  }
+
+  private _form: FormGroup = new FormGroup({});
+  @Input()
+  set form(value: FormGroup) {
+    this._form = value;
+    this.ngOnInit();
+  }
+  get form(): FormGroup {
+    return this._form;
+  }  
 
   private unsub: Subscription[] = [];
 
@@ -35,6 +52,7 @@ export class RedyformComponent implements ControlValueAccessor, OnInit, OnDestro
 
   ngOnDestroy() {
     this.unsub.forEach(u => u.unsubscribe());
+    this.unsub = [];
   }
 
   writeValue(obj: any): void {
