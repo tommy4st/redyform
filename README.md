@@ -1,4 +1,4 @@
-![GitHub Package](https://github.com/tommy4st/redyform/workflows/GitHub%20Package/badge.svg)
+![Bump version and publish package](https://github.com/tommy4st/redyform/workflows/Bump%20version%20and%20publish%20package/badge.svg)
 
 # Redyform
 
