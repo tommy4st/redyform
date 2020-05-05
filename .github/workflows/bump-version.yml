@@ -21,3 +21,4 @@ jobs:
         preset: 'angular'
         tag-prefix: 'v'
         output-file: 'CHANGELOG.md'
+        package-json: './projects/redyform/package.json'
