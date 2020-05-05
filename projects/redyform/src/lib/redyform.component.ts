@@ -31,7 +31,7 @@ export class RedyformComponent implements ControlValueAccessor, OnInit, OnDestro
   }
   get form(): FormGroup {
     return this._form;
-  }  
+  }
 
   private unsub: Subscription[] = [];
 
@@ -44,7 +44,7 @@ export class RedyformComponent implements ControlValueAccessor, OnInit, OnDestro
   constructor(private redyformService: RedyformService, private elRef: ElementRef) {}
 
   ngOnInit() {
-    this.unsub.push(this.redyformService.init(this.model, {}, this.form).subscribe(re => {
+    this.unsub.push(this.redyformService.init(this.model, this.redyform ? this.redyform.data : {}, this.form).subscribe(re => {
       this.unsub.push(re.form.valueChanges.subscribe(next => this.valueChanges.emit(next)));
       this.redyform = re;
     }));
