@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { Observable, Observer } from 'rxjs';
 
@@ -85,7 +85,7 @@ export class RedyformService {
           this.prepareForData(data[f.name], f.children, fg.get(f.name));
           break;
         default:
-          console.log(f.type, f.name, fg);
+          isDevMode() && console.log('unprepared type', f.type, f.name, fg);
       }
     });
   }

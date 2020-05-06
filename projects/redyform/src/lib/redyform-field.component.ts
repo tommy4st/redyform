@@ -70,6 +70,7 @@ export class RedyformFieldComponent {
           context: {
             get: (f, i?) => this.getContext(f, i),
             add: (e?) => this.addField(e),
+            move: (from, to, e?) => this.moveField(from, to, e),
             remove: (i, e?) => this.removeField(i, e),
           },
         });
@@ -101,14 +102,34 @@ export class RedyformFieldComponent {
 
   addField(e?: Event): void {
     e && e.preventDefault();
-    (this.control as FormArray).push(this.redyformService.toFormGroupFromArr(this.field.children));
-    (this.field.defaultValue as any[]).push(Object.assign([], this.field.children));
+
+    let fa: FormArray = (this.control as FormArray);
+    let dv: any[] = (this.field.defaultValue as any[]);
+    
+    fa.push(this.redyformService.toFormGroupFromArr(this.field.children));
+    dv.push(Object.assign([], this.field.children));
+  }
+
+  moveField(from: number, to: number, e?: Event): void {
+    e && e.preventDefault();
+    
+    let fa: FormArray = (this.control as FormArray);
+    let dv: any[] = (this.field.defaultValue as any[]);
+    let item: AbstractControl = fa.at(from);
+    
+    fa.removeAt(from);
+    fa.insert(to, item);
+    dv.splice(to, 0, dv.splice(from, 1));
   }
 
   removeField(i: number, e?: MouseEvent): void {
     e && e.preventDefault();
-    (this.control as FormArray).removeAt(i);
-    (this.field.defaultValue as any[]).splice(i, 1);
+
+    let fa: FormArray = (this.control as FormArray);
+    let dv: any[] = (this.field.defaultValue as any[]);
+
+    fa.removeAt(i);
+    dv.splice(i, 1);
   }
 
   prepareItems(): Observable<any> {

@@ -10,6 +10,8 @@ import { FormArray } from '@angular/forms';
     <div *ngFor="let _noop of field.defaultValue; let i = index" style="border-bottom: 1px solid black">
       <redyform-field *ngFor="let f of field.children" [field]="context.get(f, i).field" [control]="context.get(f, i).control"></redyform-field>
       <button (click)="context.remove(i, $event)">Remove</button>
+      <button [disabled]="i == field.defaultValue.length - 1" (click)="context.move(i, i + 1, $event)">Down</button>
+      <button [disabled]="i == 0" (click)="context.move(i, i - 1, $event)">Up</button>
     </div>
     <button (click)="context.add($event)">Add</button>
   </fieldset>

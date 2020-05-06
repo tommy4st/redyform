@@ -13,6 +13,7 @@ export class RedyformBaseComponent {
   @Input() context: {
     get: (f: any, i?: number) => { field: any, control: AbstractControl },
     add: (e?: Event) => void,
+    move: (from: number, to: number, e: Event) => void,
     remove: (i: number, e?: MouseEvent) => void,
   };
 }
