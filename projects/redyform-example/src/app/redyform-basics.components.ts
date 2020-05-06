@@ -1,12 +1,13 @@
 import { Component } from "@angular/core";
 import { RedyformBaseComponent } from 'projects/redyform/src/public-api';
+import { FormArray } from '@angular/forms';
 
 @Component({
   selector: 'redyform-array',
   template: `
   <fieldset>
     <legend *ngIf="field.label">{{field.label}}</legend>
-    <div *ngFor="let arr of field.defaultValue; let i = index" style="border-bottom: 1px solid black">
+    <div *ngFor="let _noop of field.defaultValue; let i = index" style="border-bottom: 1px solid black">
       <redyform-field *ngFor="let f of field.children" [field]="context.get(f, i).field" [control]="context.get(f, i).control"></redyform-field>
       <button (click)="context.remove(i, $event)">Remove</button>
     </div>

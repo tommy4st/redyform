@@ -1,6 +1,6 @@
 import { Component, Input, ChangeDetectorRef, EventEmitter, Injector, ViewChild, Optional, HostBinding } from '@angular/core';
 import { AbstractControl, FormArray } from '@angular/forms';
-import { RedyformService } from './redyform.service';
+import { RedyformService, RedyformField } from './redyform.service';
 import { of, Observable } from 'rxjs';
 import { debounceTime, tap, switchMap, map, catchError, publishReplay, refCount } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
@@ -17,10 +17,10 @@ export class RedyformFieldComponent {
 
   @Input() control: AbstractControl;
   @Input()
-  get field(): any {
-    return this._field || {};
+  get field(): RedyformField {
+    return this._field || { type: undefined };
   }
-  set field(f: any) {
+  set field(f: RedyformField) {
     f._meta = {};
 
     this._meta = f._meta;
@@ -45,7 +45,7 @@ export class RedyformFieldComponent {
     return isNaN(w) ? w : (w / 12 * 100) + '%';
   }
 
-  _field: any;
+  _field: RedyformField;
 
   _meta: any;
 
@@ -80,29 +80,35 @@ export class RedyformFieldComponent {
     });
   }
 
-  getContext(f: any, i?: number) : { field: any, control: AbstractControl } {
+  getContext(f: RedyformField, i?: number) : { field: RedyformField, control: AbstractControl } {
     if(this.field.type ===  "array") {
       let fa: FormArray = this.control as FormArray;
       for (let j = fa.length; j <= i; j++) {
         fa.push(this.redyformService.toFormGroupFromArr(this.field.children));
       }
-      return {'field': f, 'control': fa.at(i).get(f.name)};
+      return {
+        field: f,
+        control: fa.at(i).get(f.name)
+      };
     }
     else {
-      return {'field': f, 'control': this.control};
+      return {
+        field: f,
+        control: this.control
+      };
     }
   }
 
   addField(e?: Event): void {
     e && e.preventDefault();
-    this.field.defaultValue.push(this.field.children);
     (this.control as FormArray).push(this.redyformService.toFormGroupFromArr(this.field.children));
+    (this.field.defaultValue as any[]).push(Object.assign([], this.field.children));
   }
 
   removeField(i: number, e?: MouseEvent): void {
     e && e.preventDefault();
-    this.field.defaultValue.splice(i, 1);
     (this.control as FormArray).removeAt(i);
+    (this.field.defaultValue as any[]).splice(i, 1);
   }
 
   prepareItems(): Observable<any> {

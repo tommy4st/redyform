@@ -73,7 +73,7 @@ export class RedyformService {
         case 'array':
           let fa = fg.get(f.name) as FormArray;
           while (data[f.name].length > fa.length) {
-            (f.defaultValue as any[]).push(f.children);
+            (f.defaultValue as any[]).push(Object.assign({}, f.children));
             fa.push(this.toFormGroupFromArr(f.children));
           }
           while (data[f.name].length < fa.length) {

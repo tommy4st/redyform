@@ -19,7 +19,26 @@ import { RedyformModel } from 'projects/redyform/src/public-api';
 export class AppComponent {
   title = 'redyform-example';
 
-  data;
+  data = {
+    "post": {
+      "title": null,
+      "content": null
+    },
+    "comments": [
+      {
+        "name": "1",
+        "text": null
+      },
+      {
+        "name": "2",
+        "text": null
+      },
+      {
+        "name": "3",
+        "text": null
+      }
+    ]
+  };
 
   model: RedyformModel = [
     {
