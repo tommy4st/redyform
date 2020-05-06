@@ -1,6 +1,6 @@
-![Bump version and publish package](https://github.com/tommy4st/redyform/workflows/Bump%20version%20and%20publish%20package/badge.svg)
-
 # Redyform
+
+Presentation agnostic, dynamic forms framework
 
 ```sh
 npm install @tommy4st/redyform
