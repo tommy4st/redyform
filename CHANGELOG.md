@@ -1,9 +1,9 @@
-## 0.0.6 (2020-05-06)
+## 0.0.7 (2020-05-06)
 
 
 ### Bug Fixes
 
-* handling of arrays ([a748b43](https://github.com/tommy4st/redyform/commit/a748b433e391fe3edc81a3db9b4fdfc087285e7d))
+* move function in array context ([78e3a59](https://github.com/tommy4st/redyform/commit/78e3a593d9dc24ac9d201632219d990403c06317))
 
 
 
