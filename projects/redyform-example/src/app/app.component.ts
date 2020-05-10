@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RedyformModel } from 'projects/redyform/src/public-api';
+import { RedyformModel, RedyformField } from 'projects/redyform/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +21,7 @@ export class AppComponent {
 
   data = {
     "post": {
-      "title": null,
+      "title": "null",
       "content": null
     },
     "comments": [
@@ -72,6 +72,18 @@ export class AppComponent {
           label: 'Comment',
           type: 'textarea',
           name: 'text'
+        },
+        {
+          type: 'array',
+          name: 'replies',
+          label: 'Replies',
+          children: [
+            {
+              type: 'textarea',
+              name: 'reply',
+              label: 'Reply'
+            }
+          ]
         }
       ]
     }

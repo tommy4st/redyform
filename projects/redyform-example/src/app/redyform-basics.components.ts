@@ -1,34 +1,34 @@
 import { Component } from "@angular/core";
 import { RedyformBaseComponent } from 'projects/redyform/src/public-api';
-import { FormArray } from '@angular/forms';
+import { FormArray, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'redyform-array',
   template: `
   <fieldset>
     <legend *ngIf="field.label">{{field.label}}</legend>
-    <div *ngFor="let _noop of field.defaultValue; let i = index" style="border-bottom: 1px solid black">
-      <redyform-field *ngFor="let f of field.children" [field]="context.get(f, i).field" [control]="context.get(f, i).control"></redyform-field>
-      <button (click)="context.remove(i, $event)">Remove</button>
-      <button [disabled]="i == field.defaultValue.length - 1" (click)="context.move(i, i + 1, $event)">Down</button>
-      <button [disabled]="i == 0" (click)="context.move(i, i - 1, $event)">Up</button>
+    <div *ngFor="let ctrl of control.controls; index as i" style="border-bottom: 1px solid black">
+      <div>
+        <redyform-field *ngFor="let f of field.children" [control]="ctrl.controls[f.name]"></redyform-field>
+      </div>
     </div>
     <button (click)="context.add($event)">Add</button>
   </fieldset>
 `
 })
-export class RedyformArrayComponent extends RedyformBaseComponent {}
+export class RedyformArrayComponent extends RedyformBaseComponent<FormArray> {
+}
 
 @Component({
   selector: 'redyform-object',
   template: `
   <fieldset>
     <legend *ngIf="field.label">{{ field.label }}</legend>
-    <redyform-field *ngFor="let f of field.children; let i = index" [field]="f" [control]="control.get(f.name)"></redyform-field>
+    <redyform-field *ngFor="let f of field.children; let i = index" [control]="control.controls[f.name]"></redyform-field>
   </fieldset>
 `
 })
-export class RedyformObjectComponent extends RedyformBaseComponent {}
+export class RedyformObjectComponent extends RedyformBaseComponent<FormGroup> {}
 
 @Component({
   selector: 'redyform-string',
@@ -43,7 +43,7 @@ export class RedyformObjectComponent extends RedyformBaseComponent {}
   }
   `]
 })
-export class RedyformStringComponent extends RedyformBaseComponent {}
+export class RedyformStringComponent extends RedyformBaseComponent<FormControl> {}
 
 @Component({
   selector: 'redyform-textarea',
@@ -58,4 +58,4 @@ label, textarea {
 }
 `]
 })
-export class RedyformTextareaComponent extends RedyformBaseComponent {}
+export class RedyformTextareaComponent extends RedyformBaseComponent<FormControl> {}

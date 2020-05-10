@@ -2,7 +2,6 @@ import { Injectable, Compiler, Injector, ComponentFactoryResolver, ɵCodegenComp
 import { HttpClient } from "@angular/common/http";
 import { map, first } from 'rxjs/operators';
 import { execFn } from './fn-helpers';
-import { RedyformService } from "./redyform.service";
 import { Subscription } from "rxjs";
 
 import * as AngularCore from '@angular/core';
@@ -20,7 +19,7 @@ export class RedyformPluginService {
   
   fieldTypes: {[key: string]: { type: ComponentType<any>, resolver?: ComponentFactoryResolver} } = {};
 
-  constructor(@Optional() @Inject(REDYFORM_TYPE) types: any[], private compiler: Compiler, private injector: Injector, private http: HttpClient, private componentFactoryResolver: ComponentFactoryResolver, private redyforms: RedyformService) {
+  constructor(@Optional() @Inject(REDYFORM_TYPE) types: any[], private compiler: Compiler, private injector: Injector, private http: HttpClient, private componentFactoryResolver: ComponentFactoryResolver) {
     if (types) {
       types.forEach(type => {
         let factory = componentFactoryResolver.resolveComponentFactory(type);
