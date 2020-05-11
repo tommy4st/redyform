@@ -189,7 +189,7 @@ export class RedyformComponent implements ControlValueAccessor, OnInit {
       }
     }
     else {
-      ctrl = new FormControl(value || field.defaultValue, this.buildValidators(field));
+      ctrl = new FormControl(typeof value !== 'undefined' ? value : field.defaultValue, this.buildValidators(field));
     }
 
     ctrl._field = field;
@@ -198,7 +198,7 @@ export class RedyformComponent implements ControlValueAccessor, OnInit {
 
   childrenToFormGroup(field: RedyformField, value: any) {
     return new FormGroup(field.children.reduce((map, child) => {
-      map[child.name] = this.prepareField(child, value ? value[child.name] : undefined);
+      map[child.name] = this.prepareField(child, typeof value !== 'undefined' ? value[child.name] : undefined);
       return map;
     }, {}));
   }
