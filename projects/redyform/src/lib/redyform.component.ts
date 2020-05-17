@@ -148,7 +148,7 @@ export class RedyformComponent implements ControlValueAccessor, OnInit {
     f.valueChanges.subscribe(next => this.valueChanges.emit(Object.assign(this._value, next)));
   }
 
-  private _value: any;
+  private _value: any = {};
 
   get value(): any {
     return Object.assign(this._value, this._form.value);
