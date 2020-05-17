@@ -1,9 +1,9 @@
-## 0.0.10 (2020-05-17)
+## 0.0.11 (2020-05-17)
 
 
 ### Bug Fixes
 
-* keep values not specified in model ([c417619](https://github.com/tommy4st/redyform/commit/c4176192e7ad484552be81b0cf595be91b85dd8f))
+* bugfix from last commit ([4983928](https://github.com/tommy4st/redyform/commit/49839282832b1e88ff0d38c0edbf7e40b29df983))
 
 
 
