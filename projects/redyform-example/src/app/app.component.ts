@@ -20,6 +20,7 @@ export class AppComponent {
   title = 'redyform-example';
 
   data = {
+    "_hidden": "123",
     "post": {
       "title": "null",
       "content": null

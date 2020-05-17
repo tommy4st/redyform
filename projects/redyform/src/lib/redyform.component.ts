@@ -145,15 +145,18 @@ export class RedyformComponent implements ControlValueAccessor, OnInit {
     if (this._model) {
       this.prepareModel(JSON.parse(JSON.stringify(f.value)));
     }
-    f.valueChanges.subscribe(next => this.valueChanges.emit(next));
+    f.valueChanges.subscribe(next => this.valueChanges.emit(Object.assign(this._value, next)));
   }
 
+  private _value: any;
+
   get value(): any {
-    return this._form.value;
+    return Object.assign(this._value, this._form.value);
   }
   set value(value: any) {
     if (value) {
-      this.prepareModel(value);
+      this.prepareModel(this._value = value);
+      this.form.patchValue(value);
     }
   }
 
