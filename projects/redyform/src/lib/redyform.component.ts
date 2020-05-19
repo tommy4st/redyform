@@ -1,7 +1,7 @@
 import { Component, Input, ChangeDetectorRef, EventEmitter, forwardRef, Output, OnInit, OnDestroy, ViewContainerRef, ComponentRef, ChangeDetectionStrategy, OnChanges, SimpleChanges } from '@angular/core';
 import { FormArray, NG_VALUE_ACCESSOR, FormGroup, ValidatorFn, Validators, FormControl, ControlValueAccessor, AbstractControl } from '@angular/forms';
 import { RedyformPluginService } from './redyform-plugin.service';
-import { compileFn } from 'dist/redyform/lib/fn-helpers';
+import { compileFn } from './fn-helpers';
 
 export type RedyformModel = RedyformField[];
 
