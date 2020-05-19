@@ -15,7 +15,7 @@ export interface RedyformField {
   validations?: ({
     kind: 'minlength' | 'maxlength' | 'email' | 'required' | 'pattern' | string
     value?: ValidatorFn | number | string | RegExp
-    message: string
+    message?: string
   })[]
   [key: string]: any
 }
