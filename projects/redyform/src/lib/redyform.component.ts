@@ -1,31 +1,25 @@
 import { Component, Input, ChangeDetectorRef, EventEmitter, forwardRef, Output, OnInit, OnDestroy, ViewContainerRef, ComponentRef, ChangeDetectionStrategy, OnChanges, SimpleChanges } from '@angular/core';
 import { FormArray, NG_VALUE_ACCESSOR, FormGroup, ValidatorFn, Validators, FormControl, ControlValueAccessor, AbstractControl } from '@angular/forms';
 import { RedyformPluginService } from './redyform-plugin.service';
+import { compileFn } from 'dist/redyform/lib/fn-helpers';
 
 export type RedyformModel = RedyformField[];
 
-export type RedyformValidation = {
-  name: 'custom',
-  value: ValidatorFn
-} | {
-  name: 'minlength' | 'maxlength',
-  value: number
-} | {
-  name: 'email' | 'required'
-} | {
-  name: 'pattern',
-  value: string | RegExp
-};
-
 export interface RedyformField {
-  name?: string;
-  type: string;
-  label?: string;
-  children?: RedyformModel;
-  defaultValue?: string | boolean | number | object | any[];
-  required?: boolean;
-  validations?: RedyformValidation[];
-  [key: string]: any;
+  name?: string
+  type: string
+  label?: string
+  children?: RedyformModel
+  defaultValue?: string | boolean | number | object | any[]
+  required?: boolean
+  validations?: {
+    [key: string]: {
+      kind: 'function' | 'minlength' | 'maxlength' | 'email' | 'required' | 'pattern'
+      value?: ValidatorFn | number | string | RegExp
+      message: string
+    }
+  }
+  [key: string]: any
 }
 
 export class RedyformBaseComponent<T extends FormGroup | FormArray | FormControl> {
@@ -184,7 +178,7 @@ export class RedyformComponent implements ControlValueAccessor, OnInit {
     if (Array.isArray(field.children)) {
       if (field.type.endsWith('array')) {
         // array
-        ctrl = new FormArray((Array.isArray(value) ? value : []).map((v, i) => this.childrenToFormGroup(field, v)));
+        ctrl = new FormArray((Array.isArray(value) ? value : []).map((v) => this.childrenToFormGroup(field, v)));
       }
       else {
         // object
@@ -207,20 +201,22 @@ export class RedyformComponent implements ControlValueAccessor, OnInit {
   }
 
   private buildValidators(field: RedyformField): ValidatorFn[] {
-    return (field.validations || []).map(v => {
-      switch (v.name) {
+    return Object.keys(field.validations || {}).map(k => {
+      let o = field.validations[k];
+
+      switch (o.kind) {
         case 'required':
           return Validators.required;
         case 'minlength':
-          return Validators.minLength(v.value);
+          return Validators.minLength(o.value as number);
         case 'maxlength':
-          return Validators.maxLength(v.value);
+          return Validators.maxLength(o.value as number);
         case 'email':
           return Validators.email;
         case 'pattern':
-          return Validators.pattern(v.value);
-        case 'custom':
-          return v.value;
+          return Validators.pattern(o.value as string | RegExp);
+        case 'function':
+          return (typeof o.value === 'string' ? compileFn(o.value, ['control']) : o.value) as ValidatorFn;
       }
     });
   }
