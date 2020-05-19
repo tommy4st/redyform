@@ -12,13 +12,11 @@ export interface RedyformField {
   children?: RedyformModel
   defaultValue?: string | boolean | number | object | any[]
   required?: boolean
-  validations?: {
-    [key: string]: {
-      kind: 'function' | 'minlength' | 'maxlength' | 'email' | 'required' | 'pattern'
-      value?: ValidatorFn | number | string | RegExp
-      message: string
-    }
-  }
+  validations?: ({
+    kind: 'minlength' | 'maxlength' | 'email' | 'required' | 'pattern' | string
+    value?: ValidatorFn | number | string | RegExp
+    message: string
+  })[]
   [key: string]: any
 }
 
@@ -201,22 +199,20 @@ export class RedyformComponent implements ControlValueAccessor, OnInit {
   }
 
   private buildValidators(field: RedyformField): ValidatorFn[] {
-    return Object.keys(field.validations || {}).map(k => {
-      let o = field.validations[k];
-
-      switch (o.kind) {
+    return (field.validations || []).map(v => {
+      switch (v.kind) {
         case 'required':
           return Validators.required;
         case 'minlength':
-          return Validators.minLength(o.value as number);
+          return Validators.minLength(v.value as number);
         case 'maxlength':
-          return Validators.maxLength(o.value as number);
+          return Validators.maxLength(v.value as number);
         case 'email':
           return Validators.email;
         case 'pattern':
-          return Validators.pattern(o.value as string | RegExp);
-        case 'function':
-          return (typeof o.value === 'string' ? compileFn(o.value, ['control']) : o.value) as ValidatorFn;
+          return Validators.pattern(v.value as string | RegExp);
+        default:
+          return (typeof v.value === 'string' ? compileFn(v.value, ['control']) : v.value) as ValidatorFn;
       }
     });
   }
