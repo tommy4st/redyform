@@ -1,9 +1,9 @@
-## 0.0.11 (2020-05-17)
+## 0.0.12 (2020-05-19)
 
 
 ### Bug Fixes
 
-* bugfix from last commit ([4983928](https://github.com/tommy4st/redyform/commit/49839282832b1e88ff0d38c0edbf7e40b29df983))
+* refactored validators ([937b3d8](https://github.com/tommy4st/redyform/commit/937b3d8345a2121f233b6ccaaa84e2b7f714029f))
 
 
 
