@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RedyformModel, RedyformField } from 'projects/redyform/src/public-api';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +11,9 @@ import { RedyformModel, RedyformField } from 'projects/redyform/src/public-api';
         Welcome to {{title}}!
       </h1>
     </div>
-    <redyform [model]="model" [(ngModel)]="data"></redyform>
+    <redyform [model]="model" [(ngModel)]="data" #modelvar="ngModel"></redyform>
     <pre>{{ data | json }}</pre>
+    <pre>{{ modelvar.valid }}</pre>
     <button (click)="changeModel()">drop model</button>
   `,
   styles: []
@@ -51,6 +53,13 @@ export class AppComponent {
           label: 'Title',
           name: 'title',
           type: 'string',
+          validations: [
+            {
+              kind: 'test',
+              value: (ctrl: FormControl) => ctrl.value === 'test' ? {'test': {x:1}} : null,
+              message: 'Error'
+            }
+          ]
         },
         {
           label: 'Content',

@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectorRef, EventEmitter, forwardRef, Output, OnInit, OnDestroy, ViewContainerRef, ComponentRef, ChangeDetectionStrategy, OnChanges, SimpleChanges } from '@angular/core';
-import { FormArray, NG_VALUE_ACCESSOR, FormGroup, ValidatorFn, Validators, FormControl, ControlValueAccessor, AbstractControl } from '@angular/forms';
+import { FormArray, NG_VALUE_ACCESSOR, FormGroup, ValidatorFn, Validators, FormControl, ControlValueAccessor, AbstractControl, Validator, NG_VALIDATORS, ValidationErrors } from '@angular/forms';
 import { RedyformPluginService } from './redyform-plugin.service';
 import { compileFn } from './fn-helpers';
 
@@ -108,10 +108,11 @@ export class RedyformFieldComponent implements OnDestroy, OnInit, OnChanges {
   `,
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => RedyformComponent), multi: true },
+    { provide: NG_VALIDATORS, useExisting: forwardRef(() => RedyformComponent), multi: true},
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RedyformComponent implements ControlValueAccessor, OnInit {
+export class RedyformComponent implements ControlValueAccessor, Validator, OnInit {
 
   private _model: RedyformModel;
 
@@ -154,6 +155,16 @@ export class RedyformComponent implements ControlValueAccessor, OnInit {
 
   @Output()
   valueChanges = new EventEmitter();
+
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  validate(control: AbstractControl): ValidationErrors {
+    return this.form.invalid ? {_: undefined} : null;
+  }
+  
+  registerOnValidatorChange?(fn: () => void): void {
+    //throw new Error("Method not implemented.");
+  }
 
   private prepareModel(value: any) {
     let model = this.model;
@@ -216,8 +227,6 @@ export class RedyformComponent implements ControlValueAccessor, OnInit {
       }
     });
   }
-
-  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.form = new FormGroup({});
