@@ -1,9 +1,9 @@
-## 0.0.14 (2020-05-19)
+## 0.0.15 (2020-05-19)
 
 
 ### Bug Fixes
 
-* refactored again 🤨 ([f4ada03](https://github.com/tommy4st/redyform/commit/f4ada03e6410d82aeea135d2b1545da0aafcae51))
+* propagating validity 🤤 ([667e9c3](https://github.com/tommy4st/redyform/commit/667e9c3ff2862e286ffce7b7dd1b6df439f15540))
 
 
 
