@@ -1,9 +1,9 @@
-# 0.1.0 (2020-05-20)
+## 0.1.1 (2020-05-20)
 
 
-### Features
+### Bug Fixes
 
-* going public ([d37e7ca](https://github.com/tommy4st/redyform/commit/d37e7ca1472be85b716d6d4f73a069432c484c44))
+* going public for real (npm also) ([0c6d5f4](https://github.com/tommy4st/redyform/commit/0c6d5f495b6741eedc70227ae7a21330720b4345))
 
 
 
