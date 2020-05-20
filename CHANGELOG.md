@@ -1,9 +1,9 @@
-## 0.0.16 (2020-05-20)
+# 0.1.0 (2020-05-20)
 
 
-### Bug Fixes
+### Features
 
-* npm publishable? ([51ee4c0](https://github.com/tommy4st/redyform/commit/51ee4c01e6e644fa284c4e662321267aec1515f5))
+* going public ([d37e7ca](https://github.com/tommy4st/redyform/commit/d37e7ca1472be85b716d6d4f73a069432c484c44))
 
 
 
