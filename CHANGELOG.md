@@ -1,9 +1,9 @@
-## 0.0.15 (2020-05-19)
+## 0.0.16 (2020-05-20)
 
 
 ### Bug Fixes
 
-* propagating validity 🤤 ([667e9c3](https://github.com/tommy4st/redyform/commit/667e9c3ff2862e286ffce7b7dd1b6df439f15540))
+* npm publishable? ([51ee4c0](https://github.com/tommy4st/redyform/commit/51ee4c01e6e644fa284c4e662321267aec1515f5))
 
 
 
