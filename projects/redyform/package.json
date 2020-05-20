@@ -13,7 +13,7 @@
     "@angular/forms": "^9.1.4",
     "angular-pipes": "^10.0.0"
   },
-  "description": "Presentation agnostic, dynamic forms framework",
+  "description": "Presentation agnostic, dynamic forms framework for Angular",
   "bugs": {
     "url": "https://github.com/tommy4st/redyform/issues"
   },
