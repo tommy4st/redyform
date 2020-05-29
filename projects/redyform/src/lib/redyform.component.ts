@@ -148,15 +148,18 @@ export class RedyformComponent implements ControlValueAccessor, Validator, OnIni
   }
   set value(value: any) {
     if (value) {
-      this.prepareModel(this._value = value);
-      this.form.patchValue(value);
+      this.prepareModel(value);
+      this.form.patchValue(this._value = value);
+      this.cdr.markForCheck();
     }
   }
 
   @Output()
   valueChanges = new EventEmitter();
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private cdr: ChangeDetectorRef
+  ) {}
 
   validate(control: AbstractControl): ValidationErrors {
     return this.form.invalid ? {_: undefined} : null;

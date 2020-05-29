@@ -24,13 +24,13 @@ export class AppComponent {
   data = {
     "_hidden": "123",
     "post": {
-      "title": "null",
-      "content": null
+      "title": "title",
+      "content": "test"
     },
     "comments": [
       {
         "name": "1",
-        "text": null
+        "text": "test1"
       },
       {
         "name": "2",
